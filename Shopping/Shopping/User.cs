@@ -12,13 +12,37 @@ namespace Shopping
 
         public string LastName { get; set; }
 
-        public string Rols { get; set; }
+        public string Email { get; set; }
 
-        public User(string firstName, string lastName)
+        public string PhoneNumber { get; set; }
+
+        public string Password { get; set; }
+
+        public string Rols => RoleInstalation();
+
+        public User()
+        {
+        }
+
+        public User(string firstName, string lastName, string email, string phoneNumber, string password)
         {
             FirstName = firstName;
-
             LastName = lastName;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            Password = password;
+        }
+
+        private string RoleInstalation()
+        {
+            if (Password == "123456")
+            {
+                return "Admin";
+            }
+            else
+            {
+                return "Buyer";
+            }
         }
     }
 }

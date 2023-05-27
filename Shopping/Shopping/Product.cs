@@ -8,15 +8,17 @@ namespace Shopping
 {
     internal class Product
     {
-        public ListProducts _products;
+        private ListProducts _products;
 
-        public string ProductName { get; set; }
+        public string ProductName { get; init; }
 
-        public double ProductPrice { get; set; }
+        public double ProductPrice { get; init; }
 
-        public int ProductQuantity { get; set; }
+        public int ProductQuantity { get; init; }
 
-        public Product() { }
+        public Product()
+        {
+        }
 
         public Product(string productName, double productPrice, int productQuantity)
         {

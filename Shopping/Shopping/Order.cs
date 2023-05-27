@@ -12,13 +12,13 @@ namespace Shopping
 
         public User User { get; set; }
 
-        public Product[] Products { get; set; }
+        public ListProducts Products { get; set; }
 
-        public Order(User user, Product[] products)
+        public Order(User user, ListProducts listProducts)
         {
             Id = user.GetHashCode();
             User = user;
-            Products = products;
+            Products = listProducts;
         }
     }
 }

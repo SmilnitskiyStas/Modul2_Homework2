@@ -10,11 +10,42 @@ namespace Shopping
     {
         public void Run()
         {
+            CreateUser();
+
             ListProducts listProducts = CreateProductForShop();
 
             int countProduct = ShowAllProduct(listProducts);
 
             AddProductToCart(listProducts, countProduct);
+        }
+
+        private void CreateUser()
+        {
+            Console.WriteLine("If you want to get a discount, you need to register\n1. I want to register\n2. No, I don`t want to regiatration");
+
+            int choice = int.Parse(Console.ReadLine());
+
+            if (choice == 1)
+            {
+                Console.WriteLine("Please, input your data");
+
+                Console.WriteLine("Input your Firstname");
+                string firstName = Console.ReadLine();
+
+                Console.WriteLine("Input your Lastname");
+                string lastName = Console.ReadLine();
+
+                Console.WriteLine("Input yout Email");
+                string email = Console.ReadLine();
+
+                Console.WriteLine("Input your phone numbers");
+                string phoneNumbers = Console.ReadLine();
+
+                Console.WriteLine("Input password");
+                string password = Console.ReadLine();
+
+                User user = new User(firstName, lastName, email, phoneNumbers, password);
+            }
         }
 
         private ListProducts CreateProductForShop()
@@ -33,7 +64,7 @@ namespace Shopping
 
         private void AddProduct(string name, int price, int quantity)
         {
-            Product product = null;
+            Product product = new Product();
 
             product.AddProductToList(new Product(name, price, quantity));
         }
