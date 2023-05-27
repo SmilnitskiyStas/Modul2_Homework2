@@ -10,16 +10,35 @@ namespace Shopping
     {
         public void Run()
         {
-            CreateUser();
+            User user = CreateUser();
 
             ListProducts listProducts = CreateProductForShop();
 
-            int countProduct = ShowAllProduct(listProducts);
+            if (user.Rols.ToLower() == "admin")
+            {
+                Console.WriteLine("You can create new product\nDo you want create new product for shop?\n1. Yes\n2. No");
+                int choiceForCreateProduct = int.Parse(Console.ReadLine());
 
-            AddProductToCart(listProducts, countProduct);
+                if (choiceForCreateProduct == 1)
+                {
+                    Console.WriteLine("How you want to create products?");
+                    int counteCreateProduct = int.Parse(Console.ReadLine());
+
+                    for (int i = 0; i < counteCreateProduct; i++)
+                    {
+                        listProducts = AddProduct(listProducts);
+                    }
+                }
+            }
+
+            (int countProduct, double _) = ShowAllProduct(listProducts);
+
+            ListProducts listProductForOrder = AddProductToCart(listProducts, countProduct);
+
+            OrderProducts(listProductForOrder, user);
         }
 
-        private void CreateUser()
+        private User CreateUser()
         {
             Console.WriteLine("If you want to get a discount, you need to register\n1. I want to register\n2. No, I don`t want to regiatration");
 
@@ -45,7 +64,11 @@ namespace Shopping
                 string password = Console.ReadLine();
 
                 User user = new User(firstName, lastName, email, phoneNumbers, password);
+
+                return user;
             }
+
+            return new User();
         }
 
         private ListProducts CreateProductForShop()
@@ -62,28 +85,52 @@ namespace Shopping
             return product.GetListProducts();
         }
 
-        private void AddProduct(string name, int price, int quantity)
+        private ListProducts AddProduct(ListProducts listProducts)
         {
             Product product = new Product();
 
-            product.AddProductToList(new Product(name, price, quantity));
-        }
-
-        private int ShowAllProduct(ListProducts listProducts)
-        {
-            int productIndex = 1;
-
             while (listProducts != null)
             {
-                Console.WriteLine($"{productIndex++} - {listProducts.Value.ProductName}");
+                product.AddProductToList(listProducts.Value);
 
                 listProducts = listProducts.Next;
             }
 
-            return productIndex;
+            Console.WriteLine("Input name for product:");
+            string nameProduct = Console.ReadLine();
+
+            Console.WriteLine($"Input price for product '{nameProduct}' (use ',' format 14,49):");
+            double priceProduct = Convert.ToDouble(Console.ReadLine());
+
+            Console.WriteLine($"Input quantity for product '{nameProduct}':");
+            int quantityProduct = int.Parse(Console.ReadLine());
+
+            product.AddProductToList(new Product(nameProduct, priceProduct, quantityProduct));
+
+            Console.WriteLine($"\nProduct {nameProduct} is create\n");
+
+            return product.GetListProducts();
         }
 
-        private void AddProductToCart(ListProducts listProducts, int countProducts)
+        private (int, double) ShowAllProduct(ListProducts listProducts)
+        {
+            int productIndex = 1;
+
+            double productPrice = 0;
+
+            while (listProducts != null)
+            {
+                Console.WriteLine($"{productIndex++} - Product name: {listProducts.Value.ProductName} - Product price: {listProducts.Value.ProductPrice}");
+
+                productPrice += listProducts.Value.ProductPrice;
+
+                listProducts = listProducts.Next;
+            }
+
+            return (productIndex, productPrice);
+        }
+
+        private ListProducts AddProductToCart(ListProducts listProducts, int countProducts)
         {
             Product product = new Product();
 
@@ -124,6 +171,26 @@ namespace Shopping
                     productIndexForAddedToCart++;
                 }
             }
+
+            return cart.GetListOrders();
+        }
+
+        private void OrderProducts(ListProducts listProducts, User user)
+        {
+            if (user.FirstName == null)
+            {
+                Console.WriteLine("You need to enter your details so that we know where and to whom to send the goods");
+
+                user = CreateUser();
+            }
+
+            Console.WriteLine($"\nDear {user.FirstName}\nYou create order product\n");
+
+            (int _, double productPrice) = ShowAllProduct(listProducts);
+
+            Console.WriteLine($"Your order price = {Math.Round(productPrice, 4)}");
+
+            WriteReadFile writeReadFile = new WriteReadFile(listProducts, user);
         }
     }
 }
