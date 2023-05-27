@@ -8,7 +8,7 @@ namespace Shopping
 {
     internal class Cart
     {
-        private ListOrders _head;
+        private ListProducts _head;
 
         public Cart()
         {
@@ -18,17 +18,17 @@ namespace Shopping
         {
             if (_head == null)
             {
-                _head = new ListOrders(product, null);
+                _head = new ListProducts(product, null);
             }
             else
             {
-                ListOrders node = new ListOrders(product, _head);
+                ListProducts node = new ListProducts(product, _head);
 
                 _head = node;
             }
         }
 
-        public ListOrders GetListOrders()
+        public ListProducts GetListOrders()
         {
             return _head;
         }

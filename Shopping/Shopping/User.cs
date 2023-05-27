@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Shopping
 {
-    internal class User
+    class User
     {
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public string Rols { get; set; }
 
         public User(string firstName, string lastName)
         {

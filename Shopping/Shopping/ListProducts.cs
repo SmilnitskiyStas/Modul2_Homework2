@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Shopping
 {
-    internal class ListOrders
+    internal class ListProducts
     {
-        public ListOrders Next { get; }
+        public ListProducts Next { get; }
 
         public Product Value { get; }
 
-        public ListOrders(Product product, ListOrders next)
+        public ListProducts(Product product, ListProducts next)
         {
             Next = next;
 
