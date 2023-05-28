@@ -33,6 +33,10 @@ namespace Shopping
             Password = password;
         }
 
+        /// <summary>
+        /// Дізнаємося, яку ролі надати користувачу.
+        /// </summary>
+        /// <returns>Роль користувача.</returns>
         private string RoleInstalation()
         {
             if (Password == "123456")

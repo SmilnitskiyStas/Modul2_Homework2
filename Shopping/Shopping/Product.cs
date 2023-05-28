@@ -27,6 +27,10 @@ namespace Shopping
             ProductQuantity = productQuantity;
         }
 
+        /// <summary>
+        /// Додавання товару до списку.
+        /// </summary>
+        /// <param name="product">Об'єкт товара для додавання.</param>
         public void AddProductToList(Product product)
         {
             if (_products == null)
@@ -41,6 +45,10 @@ namespace Shopping
             }
         }
 
+        /// <summary>
+        /// Повернення списку товарів.
+        /// </summary>
+        /// <returns>Список товарів.</returns>
         public ListProducts GetListProducts()
         {
             return _products;
