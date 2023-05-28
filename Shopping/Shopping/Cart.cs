@@ -14,6 +14,10 @@ namespace Shopping
         {
         }
 
+        /// <summary>
+        /// Додавання товару до корзини.
+        /// </summary>
+        /// <param name="product">Об'єкт товару для додавання.</param>
         public void AddProductToCart(Product product)
         {
             if (_head == null)
@@ -28,6 +32,10 @@ namespace Shopping
             }
         }
 
+        /// <summary>
+        /// Повернення списку сформованого товарами.
+        /// </summary>
+        /// <returns>Двухсвязаний список товарів.</returns>
         public ListProducts GetListOrders()
         {
             return _head;
